@@ -1,0 +1,78 @@
+RUN 1: before fixes
+
+Real runs on 2026-11-02 via Fireworks. Inputs: the 4 texts shown below (long input is 'Update N: ...' repeated 199 times)
+
+=== gptoss / 1-meeting
+input: The team met to plan the Q3 launch. Sara will send the final designs by Friday. We need to book the venue before the end of the month. Raj should update the budget sheet. Everyone agreed the launch date is fixed.
+{"summary":"The team met to plan the Q3 launch. They confirmed the launch date is fixed. Sara will send the final designs by Friday, the venue must be booked before the end of the month, and Raj will update the budget sheet.","action_items":["Send the final designs by Friday.","Book the venue before the end of the month.","Update the budget sheet."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":[]}
+HTTP 200, 2.006410s
+
+=== gptoss / 2-short
+input: Lovely weather today.
+{"summary":"The weather is described as lovely today. It is a pleasant day.","action_items":["Enjoy the weather today.","Take a walk outdoors.","Plan an outdoor activity for later."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":["Input is very short; the summary and action items may only restate it.","The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 1.779488s
+
+=== gptoss / 3-no-actions
+input: The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It is about 330 metres tall and was the tallest man-made structure in the world for 41 years. Today it is one of the most visited monuments in the world.
+{"summary":"The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It stands about 330 metres tall and was the tallest man-made structure for 41 years. Today it is one of the most visited monuments worldwide.","action_items":["Create educational materials highlighting the tower's history and engineering significance.","Organize guided tours that emphasize its role in the 1889 World's Fair and its record height.","Update the official website with current visitor statistics and historical facts."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":["The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 1.840554s
+
+=== gptoss / 4-long
+input: Update 1: the support team closed 3 tickets this week and the backlog is shrinking. Priya must review the escalation policy before the next release. Update 2: the support team closed 6 tickets this we... (30302 chars)
+{"summary":"The support team reported closing a growing number of tickets each week, with the backlog continuously shrinking. Throughout the updates, Priya is repeatedly instructed to review the escalation policy before the next release.","action_items":["Review the escalation policy before the next release.","Monitor the backlog to ensure it continues shrinking.","Compile a weekly report of tickets closed by the support team."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":true,"notes":["Input was 30302 characters; only the first 12000 were summarized.","The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 2.464255s
+
+=== muse / 1-meeting
+input: The team met to plan the Q3 launch. Sara will send the final designs by Friday. We need to book the venue before the end of the month. Raj should update the budget sheet. Everyone agreed the launch date is fixed.
+{"summary":"The team met to plan the Q3 launch and agreed the launch date is fixed. Sara will send the final designs by Friday, the venue needs to be booked before the end of the month, and Raj should update the budget sheet.","action_items":["Send the final designs by Friday.","Book the venue before the end of the month.","Update the budget sheet."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":[]}
+HTTP 200, 17.177169s
+
+=== muse / 2-short
+input: Lovely weather today.
+{"summary":"The text states that the weather is lovely today. No additional information or context is provided.","action_items":["Enjoy the pleasant weather outdoors.","Consider planning an outdoor activity for the day.","Check the forecast to prepare for upcoming weather."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":["Input is very short; the summary and action items may only restate it.","The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 10.522980s
+
+=== muse / 3-no-actions
+input: The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It is about 330 metres tall and was the tallest man-made structure in the world for 41 years. Today it is one of the most visited monuments in the world.
+{"summary":"The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It is about 330 metres tall and was the tallest man-made structure in the world for 41 years, and today it is one of the most visited monuments in the world.","action_items":["Review the historical context of the Eiffel Tower's completion for the World's Fair in Paris.","Research current visitor information for this highly visited monument.","Explore more details about the tower's status as the tallest man-made structure for 41 years."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":["The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 11.141315s
+
+=== muse / 4-long
+input: Update 1: the support team closed 3 tickets this week and the backlog is shrinking. Priya must review the escalation policy before the next release. Update 2: the support team closed 6 tickets this we... (30302 chars)
+{"summary":"The text consists of repeated updates stating that the support team closed tickets and the backlog is shrinking. Each update also states that Priya must review the escalation policy before the next release.","action_items":["Review the escalation policy before the next release.","Monitor the support backlog to confirm it continues shrinking.","Schedule a check-in to coordinate the next release timing."],"model":"accounts/fireworks/models/muse-spark-open","truncated":true,"notes":["Input was 30302 characters; only the first 12000 were summarized.","The text has no clear action items; these are best-effort suggestions."]}
+HTTP 200, 12.797099s
+
+
+RUN 2: after fixes (owner rule added to prompt, note wording changed)
+
+=== gptoss / 1-meeting
+{"summary":"The team met to plan the Q3 launch. Sara will send the final designs by Friday. The launch date is fixed, and the team needs to book the venue before the end of the month. Raj will update the budget sheet.","action_items":["Send the final designs by Friday (owner: Sara).","Book the venue before the end of the month.","Update the budget sheet (owner: Raj)."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":[]}
+HTTP 200, 2.000280s
+
+=== gptoss / 2-short
+{"summary":"The weather today is described as lovely. No other details are provided.","action_items":["Enjoy the pleasant weather","Plan an outdoor activity","Take photos of the scenery"],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":["Input is very short; the summary and action items may only restate it.","Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 2.116472s
+
+=== gptoss / 3-no-actions
+{"summary":"The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It stands about 330 metres tall and was the tallest man-made structure for 41 years. Today it is one of the most visited monuments worldwide.","action_items":["Create a brochure highlighting the tower's history for tourists.","Update the website with the tower's height and historical facts.","Organize a guided tour focusing on its construction and significance."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":false,"notes":["Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 1.905291s
+
+=== gptoss / 4-long
+{"summary":"The support team reported closing an increasing number of tickets each week, with the backlog continuously shrinking. This pattern is documented across multiple updates. Priya is required to review the escalation policy before the next release.","action_items":["Review the escalation policy before the next release (owner: Priya).","Summarize the weekly ticket closure trends.","Communicate the backlog status to stakeholders."],"model":"accounts/fireworks/models/gpt-oss-120b","truncated":true,"notes":["Input was 30302 characters; only the first 12000 were summarized.","Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 2.573101s
+
+=== muse / 1-meeting
+{"summary":"The team met to plan the Q3 launch and agreed the launch date is fixed. Sara will send the final designs by Friday, the venue needs to be booked before the end of the month, and Raj should update the budget sheet.","action_items":["Send the final designs by Friday (owner: Sara).","Book the venue before the end of the month.","Update the budget sheet (owner: Raj)."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":[]}
+HTTP 200, 11.704467s
+
+=== muse / 2-short
+{"summary":"The text states that the weather is lovely today. No additional details or context are provided.","action_items":["Enjoy the pleasant weather outdoors.","Plan an outdoor activity to take advantage of the conditions.","Monitor the forecast for upcoming changes."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":["Input is very short; the summary and action items may only restate it.","Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 12.835387s
+
+=== muse / 3-no-actions
+{"summary":"The Eiffel Tower was completed in 1889 for the World's Fair in Paris. It is about 330 metres tall and was the tallest man-made structure in the world for 41 years. Today it is one of the most visited monuments in the world.","action_items":["Review historical sources to confirm details about the Eiffel Tower's construction and height.","Research current visitor information for the Eiffel Tower as a major monument.","Schedule further discussion to explore the history of the World's Fair in Paris."],"model":"accounts/fireworks/models/muse-spark-open","truncated":false,"notes":["Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 16.782611s
+
+=== muse / 4-long
+{"summary":"The support team closed tickets each week and the backlog is shrinking. Priya must review the escalation policy before the next release. This information is repeated across many weekly updates.","action_items":["Review the escalation policy before the next release (owner: Priya).","Monitor the backlog as it continues to shrink.","Continue tracking weekly ticket closures by the support team."],"model":"accounts/fireworks/models/muse-spark-open","truncated":true,"notes":["Input was 30302 characters; only the first 12000 were summarized.","Fewer than 3 clear action items were found; some are best-effort suggestions."]}
+HTTP 200, 14.595404s
